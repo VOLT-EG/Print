@@ -51,7 +51,7 @@
 
         .الحاوية-الرئيسية {
             position: relative; z-index: 1; width: 297mm; height: 210mm;
-            padding: 7mm 7mm var(--ارتفاع-المنطقة-السفلية); box-sizing: border-box;
+            padding: 5mm 7mm var(--ارتفاع-المنطقة-السفلية); box-sizing: border-box;
             display: flex; flex-direction: column; background-color: var(--لون-الخلفية-الأساسي); overflow: hidden;
         }
 
@@ -90,16 +90,19 @@
         .إطار-الباركود { width: 60px; height: 60px; margin: 0 auto 5px; border: 1.5px solid rgba(0, 229, 255, 0.712); padding: 5px; border-radius: 8px; }
         .إطار-الباركود img { width: 100%; height: 100%; object-fit: contain; filter: brightness(1.2); }
 
-        .فاصل-العناوين { border-top: 1px solid rgba(0, 229, 255, 0.4); margin: 10px 0; width: 100%; }
+        .فاصل-العناوين { border-top: 1.5px solid rgba(0, 229, 255, 0.4); margin: 12px 0; width: 100%; }
         .عناوين-الفروع { display: flex; flex-direction: column; gap: 4px; text-align: center; }
         .سطر-فرع { font-size: 0.68rem; color: #fff; display: flex; align-items: center; justify-content: center; }
         .سطر-فرع i { color: var(--لون-فولت-الأزرق); margin-left: 6px; font-size: 0.75rem; }
         .رقم-الهاتف { font-weight: bold; color: var(--لون-فولت-الأزرق); font-size: 0.75rem; margin-top: 4px; display: flex; align-items: center; justify-content: center; }
         .رقم-الهاتف i { margin-left: 6px; }
 
-        .منطقة-الفوتر { position: relative; z-index: 3; margin-top: auto; padding-top: 1px; }
-        .سطر-فاصل-نهائي { border-top: 2.2px solid rgba(255, 255, 255, 0.15); width: 100%; margin-bottom: var(--فراغ-تحت-الخط); }
-        .نص-الفوتر { font-size: 0.65rem; color: #c8dfff; text-align: center; font-family: 'OMEGLE', sans-serif; letter-spacing: 2px; }
+     /*   .منطقة-الفوتر { position: relative; z-index: 1; margin-top: auto; padding-top: 1px; }  */
+       /* .سطر-فاصل-نهائي { border-top: 2.2px solid rgba(255, 255, 255, 0.15); width: 100%; margin-bottom: var(--فراغ-تحت-الخط); }*/
+               .سطر-فاصل-نهائي { border-top: 2.2px solid rgba(255, 255, 255, 0.15); width: 100%; margin: 2px; }
+
+     
+        .نص-الفوتر { font-size: 0.65rem; color: #c8dfff; text-align: center; font-family: 'OMEGLE', sans-serif; letter-spacing: 2.5px; }
     </style>
 </head>
 <body>
