@@ -2,59 +2,62 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=297mm, initial-scale=1.0">
     <title>Volt Café | Menu Print</title>
-  <link rel="icon" type="image/png" href="https://volt-eg.github.io/N/logo.png">
+    <link rel="icon" type="image/png" href="https://volt-eg.github.io/N/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* استيراد الخطوط */
         @font-face { 
             font-family: 'OMEGLE'; 
             src: url('https://volt-eg.github.io/Sources/OMEGLE.ttf') format('truetype'); 
         }
         
         :root { 
-            /* =========================================
-               🎛️ لوحة التحكم المركزية (قيمك المفضلة)
-               ========================================= */
             --لون-فولت-الأزرق: #00e5ff;
             --لون-الخلفية-الأساسي: #0c0c0c; 
-            
             --شفافية-صورة-الخلفية: 15%;   
             --شفافية-خلفية-الأعمدة: 0.3;   
             --قوة-تغبيش-الأعمدة: 0px;       
-            
             --مسافة-بين-الأقسام: 1px;      
             --مسافة-بين-الأصناف: 6px;      
             --حجم-خط-الأصناف: 0.82rem;
             --وهج-النصوص: 0.5;             
-
             --ارتفاع-المنطقة-السفلية: 12px; 
             --فراغ-فوق-الخط: 0.02px;
             --فراغ-تحت-الخط: 2.5px;
         }
 
-        /* إعدادات الطباعة */
-        @page { size: A4 landscape; margin: 0; }
+        /* ضبط مقاس الطباعة الإجباري */
+        @page { 
+            size: A4 landscape; 
+            margin: 0; 
+        }
+
         @media print {
             body { 
                 background-color: var(--لون-الخلفية-الأساسي) !important; 
                 -webkit-print-color-adjust: exact !important; 
-                print-color-adjust: exact !important; 
+                print-color-adjust: exact !important;
+                width: 297mm;
+                height: 210mm;
             }
             #طبقة-الخلفية { opacity: var(--شفافية-صورة-الخلفية) !important; display: block !important; }
             #spark-canvas { display: none; }
         }
 
-        /* التنسيقات العامة */
         body {
-            margin: 0; padding: 0; min-width: 297mm; height: 210mm;
+            margin: 0; padding: 0; 
+            width: 297mm; /* تثبيت العرض بالمليميتر */
+            height: 210mm; /* تثبيت الطول بالمليميتر */
             background-color: #000; color: #ffffff; font-family: 'Segoe UI', sans-serif;
-            overflow-x: auto; overflow-y: hidden; 
             display: flex; justify-content: center; align-items: center;
+            /* منع الهاتف من تغيير المقاسات عند الزوم */
+            text-size-adjust: none;
+            -webkit-text-size-adjust: none;
         }
 
         #طبقة-الخلفية {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; width: 297mm; height: 210mm;
             background-image: url('https://volt-eg.github.io/Sources/BG.A4.png');
             background-size: 100% 100%; background-repeat: no-repeat;
             opacity: var(--شفافية-صورة-الخلفية); z-index: 0; 
@@ -67,10 +70,10 @@
             width: 297mm; height: 210mm;
             padding: 7mm 7mm var(--ارتفاع-المنطقة-السفلية); 
             box-sizing: border-box; display: flex; flex-direction: column;
-            background-color: var(--لون-الخلفية-الأساسي); overflow: hidden;
+            background-color: var(--لون-الخلفية-الأساسي); 
+            overflow: hidden; /* يضمن عدم وجود سكرول يفسد الطباعة */
         }
 
-        /* الهيكل التنظيمي للأعمدة */
         #مغلف-المنيو {
             position: relative; z-index: 2; display: flex; flex-direction: row; 
             flex-grow: 1; gap: 15px; justify-content: space-between;
@@ -86,7 +89,6 @@
             justify-content: flex-start; gap: var(--مسافة-بين-الأقسام);
         }
 
-        /* تنسيق الأقسام والأصناف */
         .عنوان-القسم {
             font-family: 'OMEGLE', sans-serif; font-size: 1rem; color: var(--لون-فولت-الأزرق);
             border-bottom: 2px solid rgba(0, 229, 255, 0.75);
@@ -101,7 +103,6 @@
         .السعر { font-family: 'OMEGLE', sans-serif; color: var(--لون-فولت-الأزرق); font-size: 0.9rem; }
         .وصف-الصنف { font-size: 0.70rem; color: #ffffff; margin-top: 1px; padding-right: 5px; }
 
-        /* العمود الرابع والهوية */
         .الهوية-بالأعلى { text-align: center; margin-bottom: 5px; }
         .الهوية-بالأعلى img { width: 100px; filter: drop-shadow(0 0 10px var(--لون-فولت-الأزرق)); }
         .شعار-فولت { font-family: 'OMEGLE', sans-serif; font-size: 1.1rem; color: var(--لون-فولت-الأزرق); letter-spacing: 4px; margin: 15px 0; }
@@ -116,7 +117,6 @@
         .رقم-الهاتف { font-weight: bold; color: var(--لون-فولت-الأزرق); font-size: 0.75rem; margin-top: 4px; display: flex; align-items: center; justify-content: center; }
         .رقم-الهاتف i { margin-left: 6px; }
 
-        /* الفوتر السفلر */
         .منطقة-الفوتر { position: relative; z-index: 3; margin-top: auto; padding-top: 1px; }
         .سطر-فاصل-نهائي { border-top: 2.2px solid rgba(255, 255, 255, 0.15); width: 100%; margin-bottom: var(--فراغ-تحت-الخط); }
         .نص-الفوتر { font-size: 0.65rem; color: #c8dfff; text-align: center; font-family: 'OMEGLE', sans-serif; letter-spacing: 2px; }
@@ -199,19 +199,12 @@
             } catch (e) { console.error(e); }
         }
         
-        const canvas = document.getElementById('spark-canvas'), ctx = canvas.getContext('2d');
-        let particles = [];
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
-        class Spark {
-            constructor() { this.init(); }
-            init() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 0.9 + 0.1; this.speedY = -(Math.random() * 0.3 + 0.1); this.opacity = Math.random(); this.fade = Math.random() * 0.01 + 0.005; }
-            update() { this.y += this.speedY; this.opacity -= this.fade; if (this.opacity <= 0) this.init(); }
-            draw() { ctx.fillStyle = `rgba(0, 229, 255, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
-        }
-        for (let i = 0; i < 35; i++) particles.push(new Spark());
-        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
-        init(); animate();
+        // منع الزوم اليدوي باللمس في الهواتف للحفاظ على المقاس
+        document.addEventListener('touchstart', function (event) {
+            if (event.touches.length > 1) { event.preventDefault(); }
+        }, { passive: false });
+
+        init();
     </script>
 </body>
 </html>
