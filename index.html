@@ -2,8 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=297mm, initial-scale=1.0">
-    <title>Volt Café | Menu Print</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Volt Café | Menu Final Fix</title>
     <link rel="icon" type="image/png" href="https://volt-eg.github.io/N/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -27,37 +27,42 @@
             --فراغ-تحت-الخط: 2.5px;
         }
 
-        /* ضبط مقاس الطباعة الإجباري */
-        @page { 
-            size: A4 landscape; 
-            margin: 0; 
-        }
+        @page { size: A4 landscape; margin: 0; }
 
         @media print {
-            body { 
-                background-color: var(--لون-الخلفية-الأساسي) !important; 
-                -webkit-print-color-adjust: exact !important; 
-                print-color-adjust: exact !important;
-                width: 297mm;
-                height: 210mm;
-            }
-            #طبقة-الخلفية { opacity: var(--شفافية-صورة-الخلفية) !important; display: block !important; }
+            body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             #spark-canvas { display: none; }
         }
 
         body {
-            margin: 0; padding: 0; 
-            width: 297mm; /* تثبيت العرض بالمليميتر */
-            height: 210mm; /* تثبيت الطول بالمليميتر */
-            background-color: #000; color: #ffffff; font-family: 'Segoe UI', sans-serif;
-            display: flex; justify-content: center; align-items: center;
-            /* منع الهاتف من تغيير المقاسات عند الزوم */
-            text-size-adjust: none;
-            -webkit-text-size-adjust: none;
+            margin: 0; padding: 0;
+            background-color: #000;
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+            /* منع تلاعب الهاتف بحجم الخط */
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .الحاوية-الرئيسية {
+            position: relative;
+            /* تثبيت المقاس الفعلي لورقة A4 */
+            width: 297mm;
+            height: 210mm;
+            padding: 7mm;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--لون-الخلفية-الأساسي);
+            overflow: hidden; /* منع خروج أي نص */
         }
 
         #طبقة-الخلفية {
-            position: absolute; top: 0; left: 0; width: 297mm; height: 210mm;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://volt-eg.github.io/Sources/BG.A4.png');
             background-size: 100% 100%; background-repeat: no-repeat;
             opacity: var(--شفافية-صورة-الخلفية); z-index: 0; 
@@ -65,57 +70,82 @@
 
         #spark-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
-        .الحاوية-الرئيسية {
-            position: relative; z-index: 1;
-            width: 297mm; height: 210mm;
-            padding: 7mm 7mm var(--ارتفاع-المنطقة-السفلية); 
-            box-sizing: border-box; display: flex; flex-direction: column;
-            background-color: var(--لون-الخلفية-الأساسي); 
-            overflow: hidden; /* يضمن عدم وجود سكرول يفسد الطباعة */
-        }
-
         #مغلف-المنيو {
-            position: relative; z-index: 2; display: flex; flex-direction: row; 
-            flex-grow: 1; gap: 15px; justify-content: space-between;
-            height: 190mm; margin-bottom: var(--فراغ-فوق-الخط); 
+            position: relative; z-index: 2;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            height: 185mm; /* ترك مساحة للفوتر */
+            margin-bottom: var(--فراغ-فوق-الخط);
         }
 
         .العمود {
-            display: flex; flex-direction: column; width: 24.2%; height: 98.5%; 
+            display: flex;
+            flex-direction: column;
+            width: 24%; /* نسبة مئوية لضمان الثبات */
+            height: 100%;
             background: rgba(0, 0, 0, var(--شفافية-خلفية-الأعمدة));
-            border: 2.5px solid rgba(0, 229, 255, 0.50); border-radius: 15px; 
-            padding: 15px; box-sizing: border-box; 
+            border: 2.5px solid rgba(0, 229, 255, 0.50);
+            border-radius: 15px;
+            padding: 12px;
+            box-sizing: border-box;
             backdrop-filter: blur(var(--قوة-تغبيش-الأعمدة));
-            justify-content: flex-start; gap: var(--مسافة-بين-الأقسام);
+            justify-content: flex-start;
+            gap: var(--مسافة-بين-الأقسام);
+            overflow: hidden; /* يمنع الكلام من الخروج */
         }
 
         .عنوان-القسم {
             font-family: 'OMEGLE', sans-serif; font-size: 1rem; color: var(--لون-فولت-الأزرق);
             border-bottom: 2px solid rgba(0, 229, 255, 0.75);
-            margin-bottom: 12px; padding-bottom: 6px; text-align: center;
-            text-shadow: 0 0 10px rgba(0, 229, 255, var(--وهج-النصوص));
+            margin-bottom: 10px; padding-bottom: 5px; text-align: center;
+            flex-shrink: 0; /* منع العنوان من الانضغاط */
         }
 
-        .تغليف-الصنف { margin-bottom: var(--مسافة-بين-الأصناف); }
-        .سطر-الصنف { display: flex; align-items: baseline; justify-content: space-between; }
-        .اسم-الصنف { font-size: var(--حجم-خط-الأصناف); font-weight: 700; color: #fff; text-shadow: 1px 1px 2px #000; }
-        .نقاط-الفصل { flex-grow: 1; border-bottom: 1px dotted rgba(255, 255, 255, 0.2); margin: 0 6px; height: 4px; }
-        .السعر { font-family: 'OMEGLE', sans-serif; color: var(--لون-فولت-الأزرق); font-size: 0.9rem; }
-        .وصف-الصنف { font-size: 0.70rem; color: #ffffff; margin-top: 1px; padding-right: 5px; }
+        .تغليف-الصنف { 
+            margin-bottom: var(--مسافة-بين-الأصناف);
+            width: 100%;
+        }
 
-        .الهوية-بالأعلى { text-align: center; margin-bottom: 5px; }
-        .الهوية-بالأعلى img { width: 100px; filter: drop-shadow(0 0 10px var(--لون-فولت-الأزرق)); }
-        .شعار-فولت { font-family: 'OMEGLE', sans-serif; font-size: 1.1rem; color: var(--لون-فولت-الأزرق); letter-spacing: 4px; margin: 15px 0; }
+        .سطر-الصنف { 
+            display: flex; 
+            align-items: baseline; 
+            width: 100%;
+        }
+
+        .اسم-الصنف { 
+            font-size: var(--حجم-خط-الأصناف); 
+            font-weight: 700; 
+            white-space: nowrap; /* منع انقسام الاسم لسطرين */
+            overflow: hidden;
+            text-overflow: ellipsis; /* لو الاسم طويل جداً يضع نقاط */
+        }
+
+        .نقاط-الفصل { 
+            flex-grow: 1; 
+            border-bottom: 1px dotted rgba(255, 255, 255, 0.2); 
+            margin: 0 4px; 
+        }
+
+        .السعر { font-family: 'OMEGLE', sans-serif; color: var(--لون-فولت-الأزرق); font-size: 0.9rem; flex-shrink: 0; }
         
-        .إطار-الباركود { width: 60px; height: 60px; margin: 0 auto 5px; border: 1.5px solid rgba(0, 229, 255, 0.712); padding: 5px; border-radius: 8px; }
-        .إطار-الباركود img { width: 100%; height: 100%; object-fit: contain; filter: brightness(1.2); }
+        .وصف-الصنف { 
+            font-size: 0.68rem; 
+            color: #ffffff; 
+            opacity: 0.9;
+            line-height: 1.2;
+            word-wrap: break-word; /* كسر الكلام لو خرج عن العمود */
+        }
 
-        .فاصل-العناوين { border-top: 1px solid rgba(0, 229, 255, 0.4); margin: 10px 0; width: 100%; }
-        .عناوين-الفروع { display: flex; flex-direction: column; gap: 4px; text-align: center; }
-        .سطر-فرع { font-size: 0.68rem; color: #fff; display: flex; align-items: center; justify-content: center; }
-        .سطر-فرع i { color: var(--لون-فولت-الأزرق); margin-left: 6px; font-size: 0.75rem; }
-        .رقم-الهاتف { font-weight: bold; color: var(--لون-فولت-الأزرق); font-size: 0.75rem; margin-top: 4px; display: flex; align-items: center; justify-content: center; }
-        .رقم-الهاتف i { margin-left: 6px; }
+        .الهوية-بالأعلى { text-align: center; margin-bottom: 10px; flex-shrink: 0; }
+        .الهوية-بالأعلى img { width: 90px; height: auto; }
+        .شعار-فولت { font-family: 'OMEGLE', sans-serif; font-size: 1.1rem; color: var(--لون-فولت-الأزرق); letter-spacing: 4px; margin: 8px 0; }
+        
+        .إطار-الباركود { width: 55px; height: 55px; margin: 0 auto 5px; border: 1.5px solid rgba(0, 229, 255, 0.7); padding: 4px; border-radius: 8px; }
+        .إطار-الباركود img { width: 100%; height: 100%; }
+
+        .عناوين-الفروع { text-align: center; font-size: 0.65rem; }
+        .رقم-الهاتف { font-weight: bold; color: var(--لون-فولت-الأزرق); font-size: 0.72rem; margin-bottom: 3px; }
 
         .منطقة-الفوتر { position: relative; z-index: 3; margin-top: auto; padding-top: 1px; }
         .سطر-فاصل-نهائي { border-top: 2.2px solid rgba(255, 255, 255, 0.15); width: 100%; margin-bottom: var(--فراغ-تحت-الخط); }
@@ -124,10 +154,9 @@
 </head>
 <body>
 
-    <canvas id="spark-canvas"></canvas>
-
     <div class="الحاوية-الرئيسية">
         <div id="طبقة-الخلفية"></div>
+        <canvas id="spark-canvas"></canvas>
 
         <div id="مغلف-المنيو">
             <div class="العمود" id="عمود-1"></div>
@@ -142,12 +171,11 @@
                     </div>
                 </div>
                 <div id="قسم-البيست-سيلر"></div>
-                <div class="فاصل-العناوين"></div>
                 <div class="عناوين-الفروع">
-                    <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 9299 3333 010 </div>
-                    <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 3851 8943 010 </div>
-                    <div class="سطر-فرع"><i class="fas fa-location-dot"></i> بلطيم - كورنيش الأمل</div>
-                    <div class="سطر-فرع"><i class="fas fa-location-dot"></i> كفر الشيخ - نادي ماتريكس</div>
+                    <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 010 3333 9299</div>
+                    <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 010 8943 3851</div>
+                    <div>بلطيم - كورنيش الأمل</div>
+                    <div>كفر الشيخ - نادي ماتريكس</div>
                 </div>
             </div>
         </div>
@@ -164,7 +192,7 @@
         function انشاءقسم(cat, items) {
             if (!items) return "";
             return `
-                <div class="category-wrapper">
+                <div class="category-wrapper" style="width:100%">
                     <div class="عنوان-القسم">${cat}</div>
                     ${items.map(item => `
                         <div class="تغليف-الصنف">
@@ -198,12 +226,6 @@
                 document.getElementById('قسم-البيست-سيلر').innerHTML = انشاءقسم('Best Seller ⭐', menu['Best Seller ⭐']);
             } catch (e) { console.error(e); }
         }
-        
-        // منع الزوم اليدوي باللمس في الهواتف للحفاظ على المقاس
-        document.addEventListener('touchstart', function (event) {
-            if (event.touches.length > 1) { event.preventDefault(); }
-        }, { passive: false });
-
         init();
     </script>
 </body>
