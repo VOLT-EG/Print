@@ -2,8 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Volt Café | Menu Final Fix</title>
+    <meta name="viewport" content="width=297mm, user-scalable=no">
+    <title>Volt Café | Menu Print</title>
     <link rel="icon" type="image/png" href="https://volt-eg.github.io/N/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -30,121 +30,98 @@
         @page { size: A4 landscape; margin: 0; }
 
         @media print {
-            body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            #spark-canvas { display: none; }
+            body { 
+                background-color: var(--لون-الخلفية-الأساسي) !important; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important;
+                width: 297mm; height: 210mm;
+            }
+            #طبقة-الخلفية { opacity: var(--شفافية-صورة-الخلفية) !important; display: block !important; }
         }
 
         body {
-            margin: 0; padding: 0;
-            background-color: #000;
-            color: #ffffff;
-            font-family: 'Segoe UI', sans-serif;
-            /* منع تلاعب الهاتف بحجم الخط */
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .الحاوية-الرئيسية {
-            position: relative;
-            /* تثبيت المقاس الفعلي لورقة A4 */
-            width: 297mm;
-            height: 210mm;
-            padding: 7mm;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            background-color: var(--لون-الخلفية-الأساسي);
-            overflow: hidden; /* منع خروج أي نص */
+            margin: 0; padding: 0; 
+            width: 297mm; height: 210mm;
+            background-color: #000; color: #ffffff; font-family: 'Segoe UI', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            -webkit-text-size-adjust: none; /* منع الهاتف من تكبير الخط */
         }
 
         #طبقة-الخلفية {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; width: 297mm; height: 210mm;
             background-image: url('https://volt-eg.github.io/Sources/BG.A4.png');
             background-size: 100% 100%; background-repeat: no-repeat;
             opacity: var(--شفافية-صورة-الخلفية); z-index: 0; 
         }
 
-        #spark-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .الحاوية-الرئيسية {
+            position: relative; z-index: 1;
+            width: 297mm; height: 210mm;
+            padding: 7mm 7mm var(--ارتفاع-المنطقة-السفلية); 
+            box-sizing: border-box; /* يضمن أن البادنج لا يزيد مقاس الورقة */
+            display: flex; flex-direction: column;
+            background-color: var(--لون-الخلفية-الأساسي); overflow: hidden;
+        }
 
         #مغلف-المنيو {
-            position: relative; z-index: 2;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            height: 185mm; /* ترك مساحة للفوتر */
-            margin-bottom: var(--فراغ-فوق-الخط);
+            position: relative; z-index: 2; display: flex; flex-direction: row; 
+            flex-grow: 1; gap: 15px; justify-content: space-between;
+            height: 190mm; margin-bottom: var(--فراغ-فوق-الخط); 
         }
 
         .العمود {
-            display: flex;
-            flex-direction: column;
-            width: 24%; /* نسبة مئوية لضمان الثبات */
-            height: 100%;
+            display: flex; flex-direction: column; 
+            width: 24.2%; height: 98.5%; 
             background: rgba(0, 0, 0, var(--شفافية-خلفية-الأعمدة));
-            border: 2.5px solid rgba(0, 229, 255, 0.50);
-            border-radius: 15px;
-            padding: 12px;
-            box-sizing: border-box;
+            border: 2.5px solid rgba(0, 229, 255, 0.50); border-radius: 15px; 
+            padding: 12px; box-sizing: border-box; 
             backdrop-filter: blur(var(--قوة-تغبيش-الأعمدة));
-            justify-content: flex-start;
-            gap: var(--مسافة-بين-الأقسام);
-            overflow: hidden; /* يمنع الكلام من الخروج */
+            justify-content: flex-start; gap: var(--مسافة-بين-الأقسام);
+            overflow: hidden; /* إجبار المحتوى على البقاء داخل الصندوق */
         }
 
         .عنوان-القسم {
             font-family: 'OMEGLE', sans-serif; font-size: 1rem; color: var(--لون-فولت-الأزرق);
             border-bottom: 2px solid rgba(0, 229, 255, 0.75);
-            margin-bottom: 10px; padding-bottom: 5px; text-align: center;
-            flex-shrink: 0; /* منع العنوان من الانضغاط */
+            margin-bottom: 12px; padding-bottom: 6px; text-align: center;
         }
 
         .تغليف-الصنف { 
-            margin-bottom: var(--مسافة-بين-الأصناف);
-            width: 100%;
+            margin-bottom: var(--مسافة-بين-الأصناف); 
+            width: 100%; /* ضمان عدم خروج الصف */
         }
 
         .سطر-الصنف { 
-            display: flex; 
-            align-items: baseline; 
-            width: 100%;
+            display: flex; align-items: baseline; justify-content: space-between; 
+            width: 100%; overflow: hidden;
         }
 
         .اسم-الصنف { 
-            font-size: var(--حجم-خط-الأصناف); 
-            font-weight: 700; 
-            white-space: nowrap; /* منع انقسام الاسم لسطرين */
-            overflow: hidden;
-            text-overflow: ellipsis; /* لو الاسم طويل جداً يضع نقاط */
+            font-size: var(--حجم-خط-الأصناف); font-weight: 700; color: #fff; 
+            white-space: nowrap; /* منع انقسام الاسم */
+            overflow: hidden; text-overflow: clip; /* قطع أي زيادة */
         }
 
         .نقاط-الفصل { 
-            flex-grow: 1; 
-            border-bottom: 1px dotted rgba(255, 255, 255, 0.2); 
-            margin: 0 4px; 
+            flex-grow: 1; border-bottom: 1px dotted rgba(255, 255, 255, 0.2); 
+            margin: 0 4px; min-width: 5px; 
         }
 
         .السعر { font-family: 'OMEGLE', sans-serif; color: var(--لون-فولت-الأزرق); font-size: 0.9rem; flex-shrink: 0; }
         
         .وصف-الصنف { 
-            font-size: 0.68rem; 
-            color: #ffffff; 
-            opacity: 0.9;
-            line-height: 1.2;
-            word-wrap: break-word; /* كسر الكلام لو خرج عن العمود */
+            font-size: 0.70rem; color: #ffffff; margin-top: 1px; 
+            display: block; width: 100%; word-break: break-all; /* كسر الوصف لو طويل */
         }
 
-        .الهوية-بالأعلى { text-align: center; margin-bottom: 10px; flex-shrink: 0; }
-        .الهوية-بالأعلى img { width: 90px; height: auto; }
+        .الهوية-بالأعلى { text-align: center; margin-bottom: 5px; flex-shrink: 0; }
+        .الهوية-بالأعلى img { width: 90px; filter: drop-shadow(0 0 10px var(--لون-فولت-الأزرق)); }
         .شعار-فولت { font-family: 'OMEGLE', sans-serif; font-size: 1.1rem; color: var(--لون-فولت-الأزرق); letter-spacing: 4px; margin: 8px 0; }
         
-        .إطار-الباركود { width: 55px; height: 55px; margin: 0 auto 5px; border: 1.5px solid rgba(0, 229, 255, 0.7); padding: 4px; border-radius: 8px; }
-        .إطار-الباركود img { width: 100%; height: 100%; }
+        .إطار-الباركود { width: 55px; height: 55px; margin: 0 auto 5px; border: 1.5px solid rgba(0, 229, 255, 0.712); padding: 4px; border-radius: 8px; }
+        .إطار-الباركود img { width: 100%; height: 100%; object-fit: contain; }
 
-        .عناوين-الفروع { text-align: center; font-size: 0.65rem; }
+        .عناوين-الفروع { width: 100%; text-align: center; font-size: 0.65rem; }
         .رقم-الهاتف { font-weight: bold; color: var(--لون-فولت-الأزرق); font-size: 0.72rem; margin-bottom: 3px; }
 
         .منطقة-الفوتر { position: relative; z-index: 3; margin-top: auto; padding-top: 1px; }
@@ -153,11 +130,8 @@
     </style>
 </head>
 <body>
-
     <div class="الحاوية-الرئيسية">
         <div id="طبقة-الخلفية"></div>
-        <canvas id="spark-canvas"></canvas>
-
         <div id="مغلف-المنيو">
             <div class="العمود" id="عمود-1"></div>
             <div class="العمود" id="عمود-2"></div>
@@ -172,14 +146,11 @@
                 </div>
                 <div id="قسم-البيست-سيلر"></div>
                 <div class="عناوين-الفروع">
-                    <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 010 3333 9299</div>
-                    <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 010 8943 3851</div>
-                    <div>بلطيم - كورنيش الأمل</div>
-                    <div>كفر الشيخ - نادي ماتريكس</div>
+                    <div class="رقم-الهاتف">9299 3333 010 | 3851 8943 010</div>
+                    <div>بلطيم - كورنيش الأمل | كفر الشيخ - نادي ماتريكس</div>
                 </div>
             </div>
         </div>
-
         <div class="منطقة-الفوتر">
             <div class="سطر-فاصل-نهائي"></div>
             <div class="نص-الفوتر">VOLT CAFE © 2026 | DESIGN BY @MOYEHIIA</div>
