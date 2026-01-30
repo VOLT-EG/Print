@@ -12,7 +12,6 @@
         }
         
         :root { 
-            /* --- لوحة التحكم المركزية --- */
             --لون-فولت-الأزرق: #00e5ff;
             --لون-الخلفية-الأساسي: #0c0c0c; 
             --شفافية-صورة-الخلفية: 15%;   
@@ -28,19 +27,22 @@
         }
 
         @page { size: A4 landscape; margin: 0; }
+        
         @media print {
             body { background-color: var(--لون-الخلفية-الأساسي) !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            #طبقة-الخلفية { opacity: var(--شفافية-صورة-الخلفية) !important; display: block !important; }
+            .طبقة-الخلفية { opacity: var(--شفافية-صورة-الخلفية) !important; display: block !important; }
             #spark-canvas { display: none; }
+            .الحاوية-الرئيسية { break-after: page; } /* إجبار الطباعة على صفحة جديدة بعد المنيو */
         }
 
         body {
-            margin: 0; padding: 0; min-width: 297mm; height: 210mm;
+            margin: 0; padding: 0; 
             background-color: #000; color: #ffffff; font-family: 'Segoe UI', sans-serif;
-            overflow-x: auto; overflow-y: hidden; display: flex; justify-content: center; align-items: center;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        #طبقة-الخلفية {
+        /* تنسيق عام لطبقة الخلفية في الصفحتين */
+        .طبقة-الخلفية {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://volt-eg.github.io/Sources/BG.A4.png');
             background-size: 100% 100%; background-repeat: no-repeat;
@@ -49,6 +51,7 @@
 
         #spark-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
+        /* --- الصفحة الأولى: المنيو --- */
         .الحاوية-الرئيسية {
             position: relative; z-index: 1; width: 297mm; height: 210mm;
             padding: 5mm 7mm var(--ارتفاع-المنطقة-السفلية); box-sizing: border-box;
@@ -85,24 +88,41 @@
 
         .الهوية-بالأعلى { text-align: center; margin-bottom: 5px; }
         .الهوية-بالأعلى img { width: 100px; filter: drop-shadow(0 0 10px var(--لون-فولت-الأزرق)); }
-        .شعار-فولت { font-family: 'OMEGLE', sans-serif; font-size: 1.1rem; color: var(--لون-فولت-الأزرق); letter-spacing: 4px; margin: 15px 0; }
+        .شعار-فولت { font-family: 'OMEGLE', sans-serif; font-size: 1.1rem; color: var(--لون-فولت-الأزرق); letter-spacing: 4px; margin: 8px 0; }
         
         .إطار-الباركود { width: 60px; height: 60px; margin: 0 auto 5px; border: 1.5px solid rgba(0, 229, 255, 0.712); padding: 5px; border-radius: 8px; }
         .إطار-الباركود img { width: 100%; height: 100%; object-fit: contain; filter: brightness(1.2); }
 
-        .فاصل-العناوين { border-top: 1.5px solid rgba(0, 229, 255, 0.4); margin: 12px 0; width: 100%; }
+        .فاصل-العناوين { border-top: 1px solid rgba(0, 229, 255, 0.4); margin: 12px 0; width: 100%; }
         .عناوين-الفروع { display: flex; flex-direction: column; gap: 4px; text-align: center; }
         .سطر-فرع { font-size: 0.68rem; color: #fff; display: flex; align-items: center; justify-content: center; }
         .سطر-فرع i { color: var(--لون-فولت-الأزرق); margin-left: 6px; font-size: 0.75rem; }
         .رقم-الهاتف { font-weight: bold; color: var(--لون-فولت-الأزرق); font-size: 0.75rem; margin-top: 4px; display: flex; align-items: center; justify-content: center; }
         .رقم-الهاتف i { margin-left: 6px; }
 
-     /*   .منطقة-الفوتر { position: relative; z-index: 1; margin-top: auto; padding-top: 1px; }  */
-       /* .سطر-فاصل-نهائي { border-top: 2.2px solid rgba(255, 255, 255, 0.15); width: 100%; margin-bottom: var(--فراغ-تحت-الخط); }*/
-               .سطر-فاصل-نهائي { border-top: 2.2px solid rgba(255, 255, 255, 0.15); width: 100%; margin: 2px; }
+        .منطقة-الفوتر { position: relative; z-index: 3; margin-top: auto; padding-top: 1px; }
+        .سطر-فاصل-نهائي { border-top: 2.2px solid rgba(255, 255, 255, 0.15); width: 100%; margin-top: 2px; }
+        .نص-الفوتر { font-size: 0.65rem; color: #ffffffbb; text-align: center; font-family: 'OMEGLE', sans-serif; letter-spacing: 2.5px; margin-bottom: 2px; }
 
-     
-        .نص-الفوتر { font-size: 0.65rem; color: #ffffff50; text-align: center; font-family: 'OMEGLE', sans-serif; letter-spacing: 2.5px; }
+        /* --- الصفحة الثانية: الغلاف --- */
+        .صفحة-الغلاف {
+            position: relative; z-index: 1; width: 297mm; height: 210mm;
+            display: flex; justify-content: center; align-items: center;
+            background-color: var(--لون-الخلفية-الأساسي); overflow: hidden;
+            border-top: 2px dashed rgba(255, 255, 255, 0.1); /* فاصل بصري في المعاينة فقط */
+        }
+
+        .لوجو-كبير-جداً {
+            position: relative; z-index: 2;
+            width: 450px; /* حجم اللوجو الكبير في نص الصفحة */
+            filter: drop-shadow(0 0 30px var(--لون-فولت-الأزرق));
+            animation: glow 3s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 20px var(--لون-فولت-الأزرق)); }
+            to { filter: drop-shadow(0 0 50px var(--لون-فولت-الأزرق)); }
+        }
     </style>
 </head>
 <body>
@@ -110,8 +130,7 @@
     <canvas id="spark-canvas"></canvas>
 
     <div class="الحاوية-الرئيسية">
-        <div id="طبقة-الخلفية"></div>
-
+        <div class="طبقة-الخلفية"></div>
         <div id="مغلف-المنيو">
             <div class="العمود" id="عمود-1"></div>
             <div class="العمود" id="عمود-2"></div>
@@ -129,16 +148,20 @@
                 <div class="عناوين-الفروع">
                     <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 9299 3333 010 </div>
                     <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 3851 8943 010 </div>
-                    <div class="سطر-فرع"><i class="fas fa-location-dot"></i> بلطيم - كورنيش الأمل</div>
-                    <div class="سطر-فرع"><i class="fas fa-location-dot"></i> كفر الشيخ - نادي ماتريكس</div>
+                    <div class="سطر-فرع"><i class="fas fa-location-dot"></i> مصيف بلطيم - كورنيش الأمل</div>
+                    <div class="سطر-فرع"><i class="fas fa-location-dot"></i> كفر الشيخ - بـ نادي ماتريكس</div>
                 </div>
             </div>
         </div>
-
         <div class="منطقة-الفوتر">
-            <div class="سطر-فاصل-نهائي"></div>
             <div class="نص-الفوتر">VOLT CAFE © 2026 | DESIGN BY @MOYEHIIA</div>
+            <div class="سطر-فاصل-نهائي"></div>
         </div>
+    </div>
+
+    <div class="صفحة-الغلاف">
+        <div class="طبقة-الخلفية"></div>
+        <img src="https://volt-eg.github.io/N/logo.png" class="لوجو-كبير-جداً" alt="Volt Logo Large">
     </div>
 
     <script>
