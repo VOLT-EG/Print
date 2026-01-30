@@ -31,17 +31,27 @@
         @media print {
             body { background-color: var(--لون-الخلفية-الأساسي) !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             .طبقة-الخلفية { opacity: var(--شفافية-صورة-الخلفية) !important; display: block !important; }
-            #spark-canvas { display: none; }
-            .الحاوية-الرئيسية { break-after: page; } /* إجبار الطباعة على صفحة جديدة بعد المنيو */
+            #spark-canvas, #branch-selector { display: none !important; }
+            .الحاوية-الرئيسية { break-after: page; }
         }
+
+        #branch-selector {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.98); z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        .sel-box { background: #111; padding: 40px; border: 2px solid var(--لون-فولت-الأزرق); border-radius: 20px; text-align: center; }
+        .sel-btn { background: transparent; color: #fff; border: 1px solid var(--لون-فولت-الأزرق); padding: 15px 30px; margin: 10px; border-radius: 10px; cursor: pointer; font-family: 'Segoe UI'; font-weight: bold; width: 220px; transition: 0.3s; }
+        .sel-btn:hover { background: var(--لون-فولت-الأزرق); color: #000; }
 
         body {
-            margin: 0; padding: 0; 
+            margin: 0; padding: 0; min-width: 297mm;
             background-color: #000; color: #ffffff; font-family: 'Segoe UI', sans-serif;
-            display: flex; flex-direction: column; align-items: center;
+            display: flex; flex-direction: column; align-items: center; 
+            justify-content: flex-start;
         }
 
-        /* تنسيق عام لطبقة الخلفية في الصفحتين */
         .طبقة-الخلفية {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('https://volt-eg.github.io/Sources/BG.A4.png');
@@ -51,11 +61,11 @@
 
         #spark-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
-        /* --- الصفحة الأولى: المنيو --- */
         .الحاوية-الرئيسية {
             position: relative; z-index: 1; width: 297mm; height: 210mm;
             padding: 5mm 7mm var(--ارتفاع-المنطقة-السفلية); box-sizing: border-box;
-            display: flex; flex-direction: column; background-color: var(--لون-الخلفية-الأساسي); overflow: hidden;
+            display: flex; flex-direction: column; background-color: var(--لون-الخلفية-الأساسي); 
+            overflow: hidden; margin: auto 0;
         }
 
         #مغلف-المنيو {
@@ -88,84 +98,89 @@
 
         .الهوية-بالأعلى { text-align: center; margin-bottom: 5px; }
         .الهوية-بالأعلى img { width: 100px; filter: drop-shadow(0 0 10px var(--لون-فولت-الأزرق)); }
-        .شعار-فولت { font-family: 'OMEGLE', sans-serif; font-size: 1.1rem; color: var(--لون-فولت-الأزرق); letter-spacing: 4px; margin: 8px 0; }
+        .شعار-فولت { font-family: 'OMEGLE', sans-serif; font-size: 1.1rem; color: var(--لون-فولت-الأزرق); letter-spacing: 4px; margin: 15px 0; }
         
         .إطار-الباركود { width: 60px; height: 60px; margin: 0 auto 5px; border: 1.5px solid rgba(0, 229, 255, 0.712); padding: 5px; border-radius: 8px; }
         .إطار-الباركود img { width: 100%; height: 100%; object-fit: contain; filter: brightness(1.2); }
 
-        .فاصل-العناوين { border-top: 1px solid rgba(0, 229, 255, 0.4); margin: 12px 0; width: 100%; }
+        .فاصل-العناوين { border-top: 1px solid rgba(0, 229, 255, 0.4); margin: 10px 0; width: 100%; }
         .عناوين-الفروع { display: flex; flex-direction: column; gap: 4px; text-align: center; }
         .سطر-فرع { font-size: 0.68rem; color: #fff; display: flex; align-items: center; justify-content: center; }
         .سطر-فرع i { color: var(--لون-فولت-الأزرق); margin-left: 6px; font-size: 0.75rem; }
-        .رقم-الهاتف { font-weight: bold; color: var(--لون-فولت-الأزرق); font-size: 0.75rem; margin-top: 4px; display: flex; align-items: center; justify-content: center; }
-        .رقم-الهاتف i { margin-left: 6px; }
+        
+        /* إعادة خط OMEGLE لأرقام التواصل */
+        .رقم-الهاتف { font-family: 'OMEGLE', sans-serif; color: var(--لون-فولت-الأزرق); font-size: 0.85rem; margin-top: 4px; display: flex; align-items: center; justify-content: center; letter-spacing: 1px; }
+        .رقم-الهاتف i { margin-left: 6px; font-size: 0.75rem; }
 
         .منطقة-الفوتر { position: relative; z-index: 3; margin-top: auto; padding-top: 1px; }
         .سطر-فاصل-نهائي { border-top: 2.2px solid rgba(255, 255, 255, 0.15); width: 100%; margin-top: 2px; }
         .نص-الفوتر { font-size: 0.65rem; color: #ffffffbb; text-align: center; font-family: 'OMEGLE', sans-serif; letter-spacing: 2.5px; margin-bottom: 2px; }
 
-        /* --- الصفحة الثانية: الغلاف --- */
         .صفحة-الغلاف {
             position: relative; z-index: 1; width: 297mm; height: 209mm;
             display: flex; justify-content: center; align-items: center;
             background-color: var(--لون-الخلفية-الأساسي); overflow: hidden;
-            border-top: 2px dashed rgba(255, 255, 255, 0.1); /* فاصل بصري في المعاينة فقط */
+            border-top: 2px dashed rgba(255, 255, 255, 0.1); 
         }
-
-        .لوجو-كبير-جداً {
-            position: relative; z-index: 2;
-            width: 500px; /* حجم اللوجو الكبير في نص الصفحة */
-            filter: drop-shadow(0 0 30px var(--لون-فولت-الأزرق));
-            animation: glow 3s infinite alternate;
-        }
-
-        @keyframes glow {
-            from { filter: drop-shadow(0 0 20px var(--لون-فولت-الأزرق)); }
-            to { filter: drop-shadow(0 0 50px var(--لون-فولت-الأزرق)); }
-        }
+        .لوجو-كبير-جداً { position: relative; z-index: 2; width: 500px; filter: drop-shadow(0 0 30px var(--لون-فولت-الأزرق)); animation: glow 3s infinite alternate; }
+        @keyframes glow { from { filter: drop-shadow(0 0 20px var(--لون-فولت-الأزرق)); } to { filter: drop-shadow(0 0 50px var(--لون-فولت-الأزرق)); } }
     </style>
 </head>
 <body>
 
-    <canvas id="spark-canvas"></canvas>
-
-    <div class="الحاوية-الرئيسية">
-        <div class="طبقة-الخلفية"></div>
-        <div id="مغلف-المنيو">
-            <div class="العمود" id="عمود-1"></div>
-            <div class="العمود" id="عمود-2"></div>
-            <div class="العمود" id="عمود-3"></div>
-            <div class="العمود">
-                <div class="الهوية-بالأعلى">
-                    <img src="https://volt-eg.github.io/N/logo.png" alt="Volt Logo">
-                    <div class="شعار-فولت">VOLT CAFE</div>
-                    <div class="إطار-الباركود">
-                        <img src="https://volt-eg.github.io/Sources/WepQr.png" alt="QR">
-                    </div>
-                </div>
-                <div id="قسم-البيست-سيلر"></div>
-                <div class="فاصل-العناوين"></div>
-                <div class="عناوين-الفروع">
-                    <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 9299 3333 010 </div>
-                    <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 3851 8943 010 </div>
-                    <div class="سطر-فرع"><i class="fas fa-location-dot"></i> مصيف بلطيم - كورنيش الأمل</div>
-                    <div class="سطر-فرع"><i class="fas fa-location-dot"></i> كفر الشيخ - بـ نادي ماتريكس</div>
-                </div>
-            </div>
-        </div>
-        <div class="منطقة-الفوتر">
-            <div class="نص-الفوتر">VOLT CAFE © 2026 | DESIGN BY @MOYEHIIA</div>
-            <div class="سطر-فاصل-نهائي"></div>
+    <div id="branch-selector">
+        <div class="sel-box">
+            <h2 style="color:#00e5ff; font-family:'OMEGLE'; margin-bottom:20px;">اختر الفرع</h2>
+            <button class="sel-btn" onclick="startApp('https://docs.google.com/spreadsheets/d/e/2PACX-1vRqP7h1Sg74RXEdCUtKt7I2NtmoY390jVo6l4ccPugWMtcmKAnKc0BMyvJV9MXwNC5m-YiIACP1hgKy/pub?gid=1002128215&single=true&output=csv')">مصيف بلطيم</button>
+            <button class="sel-btn" onclick="startApp('https://docs.google.com/spreadsheets/d/e/2PACX-1vRqP7h1Sg74RXEdCUtKt7I2NtmoY390jVo6l4ccPugWMtcmKAnKc0BMyvJV9MXwNC5m-YiIACP1hgKy/pub?gid=979020993&single=true&output=csv')">كفر الشيخ</button>
         </div>
     </div>
 
-    <div class="صفحة-الغلاف">
-        <div class="طبقة-الخلفية"></div>
-        <img src="https://volt-eg.github.io/N/logo.png" class="لوجو-كبير-جداً" alt="Volt Logo Large">
+    <canvas id="spark-canvas"></canvas>
+
+    <div id="main-content" style="display: none;">
+        <div class="الحاوية-الرئيسية">
+            <div class="طبقة-الخلفية"></div>
+            <div id="مغلف-المنيو">
+                <div class="العمود" id="عمود-1"></div>
+                <div class="العمود" id="عمود-2"></div>
+                <div class="العمود" id="عمود-3"></div>
+                <div class="العمود">
+                    <div class="الهوية-بالأعلى">
+                        <img src="https://volt-eg.github.io/N/logo.png" alt="Volt Logo">
+                        <div class="شعار-فولت">VOLT CAFE</div>
+                        <div class="إطار-الباركود">
+                            <img src="https://volt-eg.github.io/Sources/WepQr.png" alt="QR">
+                        </div>
+                    </div>
+                    <div id="قسم-البيست-سيلر"></div>
+                    <div class="فاصل-العناوين"></div>
+                    <div class="عناوين-الفروع">
+                        <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 9299 3333 010 </div>
+                        <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 3851 8943 010 </div>
+                        <div class="سطر-فرع"><i class="fas fa-location-dot"></i> مصيف بلطيم - كورنيش الأمل</div>
+                        <div class="سطر-فرع"><i class="fas fa-location-dot"></i> كفر الشيخ - بـ نادي ماتريكس</div>
+                    </div>
+                </div>
+            </div>
+            <div class="منطقة-الفوتر">
+                <div class="نص-الفوتر">VOLT CAFE © 2026 | DESIGN BY @MOYEHIIA</div>
+                <div class="سطر-فاصل-نهائي"></div>
+            </div>
+        </div>
+
+        <div class="صفحة-الغلاف">
+            <div class="طبقة-الخلفية"></div>
+            <img src="https://volt-eg.github.io/N/logo.png" class="لوجو-كبير-جداً" alt="Volt Logo Large">
+        </div>
     </div>
 
     <script>
-        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRqP7h1Sg74RXEdCUtKt7I2NtmoY390jVo6l4ccPugWMtcmKAnKc0BMyvJV9MXwNC5m-YiIACP1hgKy/pub?gid=1002128215&single=true&output=csv';
+        function startApp(url) {
+            document.getElementById('branch-selector').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            init(url);
+        }
 
         function انشاءقسم(cat, items) {
             if (!items) return "";
@@ -185,9 +200,9 @@
                 </div>`;
         }
 
-        async function init() {
+        async function init(url) {
             try {
-                const res = await fetch(CSV_URL);
+                const res = await fetch(url);
                 const data = await res.text();
                 const rows = data.split('\n').map(r => r.split(','));
                 const menu = {};
