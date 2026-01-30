@@ -1,217 +1,197 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>Volt Café | Menu Print</title>
-  <link rel="icon" type="image/png" href="https://volt-eg.github.io/N/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* استيراد الخطوط */
-        @font-face { 
-            font-family: 'OMEGLE'; 
-            src: url('https://volt-eg.github.io/Sources/OMEGLE.ttf') format('truetype'); 
-        }
-        
-        :root { 
-            /* =========================================
-               🎛️ لوحة التحكم المركزية (قيمك المفضلة)
-               ========================================= */
-            --لون-فولت-الأزرق: #00e5ff;
-            --لون-الخلفية-الأساسي: #0c0c0c; 
-            
-            --شفافية-صورة-الخلفية: 15%;   
-            --شفافية-خلفية-الأعمدة: 0.3;   
-            --قوة-تغبيش-الأعمدة: 0px;       
-            
-            --مسافة-بين-الأقسام: 1px;      
-            --مسافة-بين-الأصناف: 6px;      
-            --حجم-خط-الأصناف: 0.82rem;
-            --وهج-النصوص: 0.5;             
+    <meta charset="UTF-8">
+    <title>Volt Café | Menu Print</title>
+    <link rel="icon" type="image/png" href="https://volt-eg.github.io/N/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @font-face { 
+            font-family: 'OMEGLE'; 
+            src: url('https://volt-eg.github.io/Sources/OMEGLE.ttf') format('truetype'); 
+        }
+        
+        :root { 
+            /* --- لوحة التحكم المركزية --- */
+            --لون-فولت-الأزرق: #00e5ff;
+            --لون-الخلفية-الأساسي: #0c0c0c; 
+            --شفافية-صورة-الخلفية: 15%;   
+            --شفافية-خلفية-الأعمدة: 0.3;   
+            --قوة-تغبيش-الأعمدة: 0px;       
+            --مسافة-بين-الأقسام: 1px;      
+            --مسافة-بين-الأصناف: 6px;      
+            --حجم-خط-الأصناف: 0.82rem;
+            --وهج-النصوص: 0.5;             
+            --ارتفاع-المنطقة-السفلية: 12px; 
+            --فراغ-فوق-الخط: 0.02px;
+            --فراغ-تحت-الخط: 2.5px;
+        }
 
-            --ارتفاع-المنطقة-السفلية: 12px; 
-            --فراغ-فوق-الخط: 0.02px;
-            --فراغ-تحت-الخط: 2.5px;
-        }
+        @page { size: A4 landscape; margin: 0; }
+        @media print {
+            body { background-color: var(--لون-الخلفية-الأساسي) !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #طبقة-الخلفية { opacity: var(--شفافية-صورة-الخلفية) !important; display: block !important; }
+            #spark-canvas { display: none; }
+        }
 
-        /* إعدادات الطباعة */
-        @page { size: A4 landscape; margin: 0; }
-        @media print {
-            body { 
-                background-color: var(--لون-الخلفية-الأساسي) !important; 
-                -webkit-print-color-adjust: exact !important; 
-                print-color-adjust: exact !important; 
-            }
-            #طبقة-الخلفية { opacity: var(--شفافية-صورة-الخلفية) !important; display: block !important; }
-            #spark-canvas { display: none; }
-        }
+        body {
+            margin: 0; padding: 0; min-width: 297mm; height: 210mm;
+            background-color: #000; color: #ffffff; font-family: 'Segoe UI', sans-serif;
+            overflow-x: auto; overflow-y: hidden; display: flex; justify-content: center; align-items: center;
+        }
 
-        /* التنسيقات العامة */
-        body {
-            margin: 0; padding: 0; min-width: 297mm; height: 210mm;
-            background-color: #000; color: #ffffff; font-family: 'Segoe UI', sans-serif;
-            overflow-x: auto; overflow-y: hidden; 
-            display: flex; justify-content: center; align-items: center;
-        }
+        #طبقة-الخلفية {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://volt-eg.github.io/Sources/BG.A4.png');
+            background-size: 100% 100%; background-repeat: no-repeat;
+            opacity: var(--شفافية-صورة-الخلفية); z-index: 0; 
+        }
 
-        #طبقة-الخلفية {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://volt-eg.github.io/Sources/BG.A4.png');
-            background-size: 100% 100%; background-repeat: no-repeat;
-            opacity: var(--شفافية-صورة-الخلفية); z-index: 0; 
-        }
+        #spark-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
-        #spark-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .الحاوية-الرئيسية {
+            position: relative; z-index: 1; width: 297mm; height: 210mm;
+            padding: 7mm 7mm var(--ارتفاع-المنطقة-السفلية); box-sizing: border-box;
+            display: flex; flex-direction: column; background-color: var(--لون-الخلفية-الأساسي); overflow: hidden;
+        }
 
-        .الحاوية-الرئيسية {
-            position: relative; z-index: 1;
-            width: 297mm; height: 210mm;
-            padding: 7mm 7mm var(--ارتفاع-المنطقة-السفلية); 
-            box-sizing: border-box; display: flex; flex-direction: column;
-            background-color: var(--لون-الخلفية-الأساسي); overflow: hidden;
-        }
+        #مغلف-المنيو {
+            position: relative; z-index: 2; display: flex; flex-direction: row; 
+            flex-grow: 1; gap: 15px; justify-content: space-between;
+            height: 190mm; margin-bottom: var(--فراغ-فوق-الخط); 
+        }
 
-        /* الهيكل التنظيمي للأعمدة */
-        #مغلف-المنيو {
-            position: relative; z-index: 2; display: flex; flex-direction: row; 
-            flex-grow: 1; gap: 15px; justify-content: space-between;
-            height: 190mm; margin-bottom: var(--فراغ-فوق-الخط); 
-        }
+        .العمود {
+            display: flex; flex-direction: column; width: 24.2%; height: 98.5%; 
+            background: rgba(0, 0, 0, var(--شفافية-خلفية-الأعمدة));
+            border: 2.5px solid rgba(0, 229, 255, 0.50); border-radius: 15px; 
+            padding: 15px; box-sizing: border-box; backdrop-filter: blur(var(--قوة-تغبيش-الأعمدة));
+            justify-content: flex-start; gap: var(--مسافة-بين-الأقسام);
+        }
 
-        .العمود {
-            display: flex; flex-direction: column; width: 24.2%; height: 98.5%; 
-            background: rgba(0, 0, 0, var(--شفافية-خلفية-الأعمدة));
-            border: 2.5px solid rgba(0, 229, 255, 0.50); border-radius: 15px; 
-            padding: 15px; box-sizing: border-box; 
-            backdrop-filter: blur(var(--قوة-تغبيش-الأعمدة));
-            justify-content: flex-start; gap: var(--مسافة-بين-الأقسام);
-        }
+        .عنوان-القسم {
+            font-family: 'OMEGLE', sans-serif; font-size: 1rem; color: var(--لون-فولت-الأزرق);
+            border-bottom: 2px solid rgba(0, 229, 255, 0.75);
+            margin-bottom: 12px; padding-bottom: 6px; text-align: center;
+            text-shadow: 0 0 10px rgba(0, 229, 255, var(--وهج-النصوص));
+        }
 
-        /* تنسيق الأقسام والأصناف */
-        .عنوان-القسم {
-            font-family: 'OMEGLE', sans-serif; font-size: 1rem; color: var(--لون-فولت-الأزرق);
-            border-bottom: 2px solid rgba(0, 229, 255, 0.75);
-            margin-bottom: 12px; padding-bottom: 6px; text-align: center;
-            text-shadow: 0 0 10px rgba(0, 229, 255, var(--وهج-النصوص));
-        }
+        .تغليف-الصنف { margin-bottom: var(--مسافة-بين-الأصناف); }
+        .سطر-الصنف { display: flex; align-items: baseline; justify-content: space-between; }
+        .اسم-الصنف { font-size: var(--حجم-خط-الأصناف); font-weight: 700; color: #fff; text-shadow: 1px 1px 2px #000; }
+        .نقاط-الفصل { flex-grow: 1; border-bottom: 1px dotted rgba(255, 255, 255, 0.2); margin: 0 6px; height: 4px; }
+        .السعر { font-family: 'OMEGLE', sans-serif; color: var(--لون-فولت-الأزرق); font-size: 0.9rem; }
+        .وصف-الصنف { font-size: 0.70rem; color: #ffffff; margin-top: 1px; padding-right: 5px; }
 
-        .تغليف-الصنف { margin-bottom: var(--مسافة-بين-الأصناف); }
-        .سطر-الصنف { display: flex; align-items: baseline; justify-content: space-between; }
-        .اسم-الصنف { font-size: var(--حجم-خط-الأصناف); font-weight: 700; color: #fff; text-shadow: 1px 1px 2px #000; }
-        .نقاط-الفصل { flex-grow: 1; border-bottom: 1px dotted rgba(255, 255, 255, 0.2); margin: 0 6px; height: 4px; }
-        .السعر { font-family: 'OMEGLE', sans-serif; color: var(--لون-فولت-الأزرق); font-size: 0.9rem; }
-        .وصف-الصنف { font-size: 0.70rem; color: #ffffff; margin-top: 1px; padding-right: 5px; }
+        .الهوية-بالأعلى { text-align: center; margin-bottom: 5px; }
+        .الهوية-بالأعلى img { width: 100px; filter: drop-shadow(0 0 10px var(--لون-فولت-الأزرق)); }
+        .شعار-فولت { font-family: 'OMEGLE', sans-serif; font-size: 1.1rem; color: var(--لون-فولت-الأزرق); letter-spacing: 4px; margin: 15px 0; }
+        
+        .إطار-الباركود { width: 60px; height: 60px; margin: 0 auto 5px; border: 1.5px solid rgba(0, 229, 255, 0.712); padding: 5px; border-radius: 8px; }
+        .إطار-الباركود img { width: 100%; height: 100%; object-fit: contain; filter: brightness(1.2); }
 
-        /* العمود الرابع والهوية */
-        .الهوية-بالأعلى { text-align: center; margin-bottom: 5px; }
-        .الهوية-بالأعلى img { width: 100px; filter: drop-shadow(0 0 10px var(--لون-فولت-الأزرق)); }
-        .شعار-فولت { font-family: 'OMEGLE', sans-serif; font-size: 1.1rem; color: var(--لون-فولت-الأزرق); letter-spacing: 4px; margin: 15px 0; }
-        
-        .إطار-الباركود { width: 60px; height: 60px; margin: 0 auto 5px; border: 1.5px solid rgba(0, 229, 255, 0.712); padding: 5px; border-radius: 8px; }
-        .إطار-الباركود img { width: 100%; height: 100%; object-fit: contain; filter: brightness(1.2); }
+        .فاصل-العناوين { border-top: 1px solid rgba(0, 229, 255, 0.4); margin: 10px 0; width: 100%; }
+        .عناوين-الفروع { display: flex; flex-direction: column; gap: 4px; text-align: center; }
+        .سطر-فرع { font-size: 0.68rem; color: #fff; display: flex; align-items: center; justify-content: center; }
+        .سطر-فرع i { color: var(--لون-فولت-الأزرق); margin-left: 6px; font-size: 0.75rem; }
+        .رقم-الهاتف { font-weight: bold; color: var(--لون-فولت-الأزرق); font-size: 0.75rem; margin-top: 4px; display: flex; align-items: center; justify-content: center; }
+        .رقم-الهاتف i { margin-left: 6px; }
 
-        .فاصل-العناوين { border-top: 1px solid rgba(0, 229, 255, 0.4); margin: 10px 0; width: 100%; }
-        .عناوين-الفروع { display: flex; flex-direction: column; gap: 4px; text-align: center; }
-        .سطر-فرع { font-size: 0.68rem; color: #fff; display: flex; align-items: center; justify-content: center; }
-        .سطر-فرع i { color: var(--لون-فولت-الأزرق); margin-left: 6px; font-size: 0.75rem; }
-        .رقم-الهاتف { font-weight: bold; color: var(--لون-فولت-الأزرق); font-size: 0.75rem; margin-top: 4px; display: flex; align-items: center; justify-content: center; }
-        .رقم-الهاتف i { margin-left: 6px; }
-
-        /* الفوتر السفلر */
-        .منطقة-الفوتر { position: relative; z-index: 3; margin-top: auto; padding-top: 1px; }
-        .سطر-فاصل-نهائي { border-top: 2.2px solid rgba(255, 255, 255, 0.15); width: 100%; margin-bottom: var(--فراغ-تحت-الخط); }
-        .نص-الفوتر { font-size: 0.65rem; color: #c8dfff; text-align: center; font-family: 'OMEGLE', sans-serif; letter-spacing: 2px; }
-    </style>
+        .منطقة-الفوتر { position: relative; z-index: 3; margin-top: auto; padding-top: 1px; }
+        .سطر-فاصل-نهائي { border-top: 2.2px solid rgba(255, 255, 255, 0.15); width: 100%; margin-bottom: var(--فراغ-تحت-الخط); }
+        .نص-الفوتر { font-size: 0.65rem; color: #c8dfff; text-align: center; font-family: 'OMEGLE', sans-serif; letter-spacing: 2px; }
+    </style>
 </head>
 <body>
 
-    <canvas id="spark-canvas"></canvas>
+    <canvas id="spark-canvas"></canvas>
 
-    <div class="الحاوية-الرئيسية">
-        <div id="طبقة-الخلفية"></div>
+    <div class="الحاوية-الرئيسية">
+        <div id="طبقة-الخلفية"></div>
 
-        <div id="مغلف-المنيو">
-            <div class="العمود" id="عمود-1"></div>
-            <div class="العمود" id="عمود-2"></div>
-            <div class="العمود" id="عمود-3"></div>
-            <div class="العمود">
-                <div class="الهوية-بالأعلى">
-                    <img src="https://volt-eg.github.io/N/logo.png" alt="Volt Logo">
-                    <div class="شعار-فولت">VOLT CAFE</div>
-                    <div class="إطار-الباركود">
-                        <img src="https://volt-eg.github.io/Sources/WepQr.png" alt="QR">
-                    </div>
-                </div>
-                <div id="قسم-البيست-سيلر"></div>
-                <div class="فاصل-العناوين"></div>
-                <div class="عناوين-الفروع">
-                    <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 9299 3333 010 </div>
-                    <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 3851 8943 010 </div>
-                    <div class="سطر-فرع"><i class="fas fa-location-dot"></i> بلطيم - كورنيش الأمل</div>
-                    <div class="سطر-فرع"><i class="fas fa-location-dot"></i> كفر الشيخ - نادي ماتريكس</div>
-                </div>
-            </div>
-        </div>
+        <div id="مغلف-المنيو">
+            <div class="العمود" id="عمود-1"></div>
+            <div class="العمود" id="عمود-2"></div>
+            <div class="العمود" id="عمود-3"></div>
+            <div class="العمود">
+                <div class="الهوية-بالأعلى">
+                    <img src="https://volt-eg.github.io/N/logo.png" alt="Volt Logo">
+                    <div class="شعار-فولت">VOLT CAFE</div>
+                    <div class="إطار-الباركود">
+                        <img src="https://volt-eg.github.io/Sources/WepQr.png" alt="QR">
+                    </div>
+                </div>
+                <div id="قسم-البيست-سيلر"></div>
+                <div class="فاصل-العناوين"></div>
+                <div class="عناوين-الفروع">
+                    <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 9299 3333 010 </div>
+                    <div class="رقم-الهاتف"><i class="fas fa-phone"></i> 3851 8943 010 </div>
+                    <div class="سطر-فرع"><i class="fas fa-location-dot"></i> بلطيم - كورنيش الأمل</div>
+                    <div class="سطر-فرع"><i class="fas fa-location-dot"></i> كفر الشيخ - نادي ماتريكس</div>
+                </div>
+            </div>
+        </div>
 
-        <div class="منطقة-الفوتر">
-            <div class="سطر-فاصل-نهائي"></div>
-            <div class="نص-الفوتر">VOLT CAFE © 2026 | DESIGN BY @MOYEHIIA</div>
-        </div>
-    </div>
+        <div class="منطقة-الفوتر">
+            <div class="سطر-فاصل-نهائي"></div>
+            <div class="نص-الفوتر">VOLT CAFE © 2026 | DESIGN BY @MOYEHIIA</div>
+        </div>
+    </div>
 
-    <script>
-        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRqP7h1Sg74RXEdCUtKt7I2NtmoY390jVo6l4ccPugWMtcmKAnKc0BMyvJV9MXwNC5m-YiIACP1hgKy/pub?gid=1002128215&single=true&output=csv';
+    <script>
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRqP7h1Sg74RXEdCUtKt7I2NtmoY390jVo6l4ccPugWMtcmKAnKc0BMyvJV9MXwNC5m-YiIACP1hgKy/pub?gid=1002128215&single=true&output=csv';
 
-        function انشاءقسم(cat, items) {
-            if (!items) return "";
-            return `
-                <div class="category-wrapper">
-                    <div class="عنوان-القسم">${cat}</div>
-                    ${items.map(item => `
-                        <div class="تغليف-الصنف">
-                            <div class="سطر-الصنف">
-                                <span class="اسم-الصنف">${item.name}</span>
-                                <div class="نقاط-الفصل"></div>
-                                <span class="السعر">${item.price}</span>
-                            </div>
-                            ${item.sub ? `<div class="وصف-الصنف">${item.sub}</div>` : ""}
-                        </div>
-                    `).join('')}
-                </div>`;
-        }
+        function انشاءقسم(cat, items) {
+            if (!items) return "";
+            return `
+                <div class="category-wrapper">
+                    <div class="عنوان-القسم">${cat}</div>
+                    ${items.map(item => `
+                        <div class="تغليف-الصنف">
+                            <div class="سطر-الصنف">
+                                <span class="اسم-الصنف">${item.name}</span>
+                                <div class="نقاط-الفصل"></div>
+                                <span class="السعر">${item.price}</span>
+                            </div>
+                            ${item.sub ? `<div class="وصف-الصنف">${item.sub}</div>` : ""}
+                        </div>
+                    `).join('')}
+                </div>`;
+        }
 
-        async function init() {
-            try {
-                const res = await fetch(CSV_URL);
-                const data = await res.text();
-                const rows = data.split('\n').map(r => r.split(','));
-                const menu = {};
-                for (let i = 1; i < rows.length; i++) {
-                    const [cat, name, price, sub] = rows[i];
-                    if (!cat || !name) continue;
-                    const c = cat.trim();
-                    if (!menu[c]) menu[c] = [];
-                    menu[c].push({ name: name.trim(), price: price.trim(), sub: sub ? sub.trim() : "" });
-                }
-                document.getElementById('عمود-1').innerHTML = انشاءقسم('مشروبات الاسبريسو', menu['مشروبات الاسبريسو']) + انشاءقسم('ايس كوفي', menu['ايس كوفي']) + انشاءقسم('ايس كريم', menu['ايس كريم']);
-                document.getElementById('عمود-2').innerHTML = انشاءقسم('مشروبات ساخنة', menu['مشروبات ساخنة']) + انشاءقسم('عصائر', menu['عصائر']) + انشاءقسم('سموزي', menu['سموزي']);
-                document.getElementById('عمود-3').innerHTML = انشاءقسم('ميلك شيك', menu['ميلك شيك']) + انشاءقسم('ديزرت', menu['ديزرت']) + انشاءقسم('وافل', menu['وافل']) + انشاءقسم('سوفت درينك', menu['سوفت درينك']);
-                document.getElementById('قسم-البيست-سيلر').innerHTML = انشاءقسم('Best Seller ⭐', menu['Best Seller ⭐']);
-            } catch (e) { console.error(e); }
-        }
-        
-        const canvas = document.getElementById('spark-canvas'), ctx = canvas.getContext('2d');
-        let particles = [];
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize();
-        class Spark {
-            constructor() { this.init(); }
-            init() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 0.9 + 0.1; this.speedY = -(Math.random() * 0.3 + 0.1); this.opacity = Math.random(); this.fade = Math.random() * 0.01 + 0.005; }
-            update() { this.y += this.speedY; this.opacity -= this.fade; if (this.opacity <= 0) this.init(); }
-            draw() { ctx.fillStyle = `rgba(0, 229, 255, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
-        }
-        for (let i = 0; i < 35; i++) particles.push(new Spark());
-        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
-        init(); animate();
-    </script>
+        async function init() {
+            try {
+                const res = await fetch(CSV_URL);
+                const data = await res.text();
+                const rows = data.split('\n').map(r => r.split(','));
+                const menu = {};
+                for (let i = 1; i < rows.length; i++) {
+                    const [cat, name, price, sub] = rows[i];
+                    if (!cat || !name) continue;
+                    const c = cat.trim();
+                    if (!menu[c]) menu[c] = [];
+                    menu[c].push({ name: name.trim(), price: price.trim(), sub: sub ? sub.trim() : "" });
+                }
+                document.getElementById('عمود-1').innerHTML = انشاءقسم('مشروبات الاسبريسو', menu['مشروبات الاسبريسو']) + انشاءقسم('ايس كوفي', menu['ايس كوفي']) + انشاءقسم('ايس كريم', menu['ايس كريم']);
+                document.getElementById('عمود-2').innerHTML = انشاءقسم('مشروبات ساخنة', menu['مشروبات ساخنة']) + انشاءقسم('عصائر', menu['عصائر']) + انشاءقسم('سموزي', menu['سموزي']);
+                document.getElementById('عمود-3').innerHTML = انشاءقسم('ميلك شيك', menu['ميلك شيك']) + انشاءقسم('ديزرت', menu['ديزرت']) + انشاءقسم('وافل', menu['وافل']) + انشاءقسم('سوفت درينك', menu['سوفت درينك']);
+                document.getElementById('قسم-البيست-سيلر').innerHTML = انشاءقسم('Best Seller ⭐', menu['Best Seller ⭐']);
+            } catch (e) { console.error(e); }
+        }
+        
+        const canvas = document.getElementById('spark-canvas'), ctx = canvas.getContext('2d');
+        let particles = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+        class Spark {
+            constructor() { this.init(); }
+            init() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 0.9 + 0.1; this.speedY = -(Math.random() * 0.3 + 0.1); this.opacity = Math.random(); this.fade = Math.random() * 0.01 + 0.005; }
+            update() { this.y += this.speedY; this.opacity -= this.fade; if (this.opacity <= 0) this.init(); }
+            draw() { ctx.fillStyle = `rgba(0, 229, 255, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
+        }
+        for (let i = 0; i < 35; i++) particles.push(new Spark());
+        function animate() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
+        init(); animate();
+    </script>
 </body>
 </html>
